@@ -23,3 +23,19 @@ Usage:
     * `rcon.py <command...>`
     * In `<command>`, spaces do not need to be escaped.
 
+## minecraft@.service, stop.sh, reload.sh
+A systemd unit file for running a minecraft server.
+
+Requirements:
+* rcon.py
+
+Usage:
+* Place the server files in `/srv/mineraft/<server name>`
+* Name the server jar `server.jar`
+* Place `stop.sh` and `reload.sh` in the server directory.
+* Enable/start the service with `systemctl enable --now minecraft@<server name>.service`
+* To access the console (you shouldn't need to, just use `rcon.py`) you can run `tmux a -t mc-<server name>` as root
+
+
+### Credits
+* `minecraft@.service` is modified from [this](https://github.com/agowa338/MinecraftSystemdUnit/).
