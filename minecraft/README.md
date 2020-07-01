@@ -1,6 +1,6 @@
 # Minecraft server administration scripts
 A collection of scripts related to administration of minecraft servers
-## rcon.py
+## `rcon.py`
 A simple python program to execute server commands with RCON.
 
 Requirements:
@@ -23,7 +23,7 @@ Usage:
     * `rcon.py <command...>`
     * In `<command>`, spaces do not need to be escaped.
 
-## minecraft\@.service, stop.sh, reload.sh
+## `minecraft@.service`, `stop.sh`, `reload.sh`
 A systemd unit file for running a minecraft server.
 
 Requirements:
