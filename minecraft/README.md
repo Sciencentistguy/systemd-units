@@ -33,6 +33,7 @@ Usage:
 * Place the server files in `/srv/mineraft/<server name>`
 * Name the server jar `server.jar`
 * Place `stop.sh` and `reload.sh` in the server directory.
+* Replace the values of `MC_SERVER_ADDR`, `MC_SERVER_RCON_PASS` and `MC_SERVER_RCON_PORT` in `stop.sh` and `reload.sh`
 * Enable/start the service with `systemctl enable --now minecraft@<server name>.service`
 * To access the console (you shouldn't need to, just use `rcon.py`) you can run `tmux a -t mc-<server name>` as root
 
