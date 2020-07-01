@@ -23,7 +23,7 @@ Usage:
     * `rcon.py <command...>`
     * In `<command>`, spaces do not need to be escaped.
 
-## minecraft@.service, stop.sh, reload.sh
+## minecraft\@.service, stop.sh, reload.sh
 A systemd unit file for running a minecraft server.
 
 Requirements:
