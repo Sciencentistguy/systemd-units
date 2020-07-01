@@ -19,6 +19,10 @@ Usage:
         * `rcon.py --url <address>`
         * `rcon.py --port <port>`
         * `rcon.py --password <password>`
+    * The relevant environment variables are:
+        * `MC_SERVER_ADDR`
+        * `MC_SERVER_RCON_PORT`
+        * `MC_SERVER_RCON_PASS`
 * Syntax:
     * `rcon.py <command...>`
     * In `<command>`, spaces do not need to be escaped.
