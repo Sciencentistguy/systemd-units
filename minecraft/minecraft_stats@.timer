@@ -1,0 +1,9 @@
+[Unit]
+Description=Run minecraft_stats@%i.service every minute
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+Unit=minecraft_stats@%i.service
+
+[Install]
+WantedBy=multi-user.target

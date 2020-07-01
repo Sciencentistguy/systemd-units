@@ -15,6 +15,6 @@ rcon.py save-off
 rcon.py save-all
 sleep 2
 tar cv world/ | pixz >"$BACKUP_DIR/$BACKUP_NAME"
-chown jamie:jamie "$BACKUP_DIR/$BACKUP_NAME"
+chown $BACKUP_USER:$BACKUP_GROUP "$BACKUP_DIR/$BACKUP_NAME"
 rcon.py save-on
 rcon.py tellraw @a '["",{"text":"["},{"text":"Server","color":"dark_red"},{"text":"]: World backup finished"}]'

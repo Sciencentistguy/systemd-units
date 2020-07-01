@@ -1,0 +1,9 @@
+[Unit]
+Description=Minecraft server statistics scraper
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/srv/minecraft/%i
+ExecStart=/usr/bin/python /srv/minecraft/%i/scraper.py

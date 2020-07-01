@@ -31,7 +31,7 @@ Usage:
 A systemd unit file for running a minecraft server.
 
 Requirements:
-* rcon.py
+* `rcon.py`
 
 Usage:
 * Place the server files in `/srv/mineraft/<server name>`
@@ -44,10 +44,29 @@ Usage:
 ## `minecraft_backup@.service`, `minecraft_backup@.timer`, `backup.sh`
 A systemd timer to run `backup.sh` every 15 minutes.
 
+Requirements:
+* `rcon.py`
+* `pixz`
+
 Usage:
 * Place `backup.sh` in `/srv/minecraft/<server name>`
 * Replace the values of `MC_SERVER_ADDR`, `MC_SERVER_RCON_PASS`, `MC_SERVER_RCON_PORT`, `BACKUP_USER` and `BACKUP_GROUP` in `backup.sh`
 * Enable/start the timer with `systemctl enable --now minecraft_backup@<server name>.timer`
 
+## `scraper.py`, `minecraft_stats@.service`, `minecraft_stats@.timer`
+A python program to take data from a minecraft server and store it in InfluxDB.
+
+Requirements:
+* An InfluxDB server.
+* `rcon.py`
+* [python-influxdb](https://github.com/influxdata/influxdb-python)
+* [mcrcon](https://pypi.org/project/mcrcon/)
+
+Usage:
+* Place `scraper.py` in `/srv/minecraft/<server name>`
+* Replace the values of `MINECRAFT_DB_NAME`, `SERVER_ID`, `INFLUX_SERVER_ADDR`, `INFLUX_SERVER_PORT`, `MC_SERVER_ADDR`, `MC_SERVER_RCON_PORT` and `MC_SERVER_RCON_PASS` in `scraper.py`
+* Enable/start the timer with `systemctl enable --now minecraft_stats@<server name>.timer`
+
+---
 ### Credits
 * `minecraft@.service` is modified from [this](https://github.com/agowa338/MinecraftSystemdUnit/).
