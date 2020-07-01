@@ -1,0 +1,9 @@
+[Unit]
+Description=Run the file "backup.sh"
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/srv/minecraft/%i
+ExecStart=/srv/minecraft/%i/backup.sh
