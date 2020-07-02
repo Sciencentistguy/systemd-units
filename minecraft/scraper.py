@@ -145,6 +145,16 @@ whitelist_json = do_json("whitelist", {"server_id": SERVER_ID}, {
 
 client.write_points(whitelist_json)
 
+total_size = 0
+start_path = 'world'
+for path, dirs, files in os.walk(start_path):
+    for f in files:
+        fp = os.path.join(path, f)
+        total_size += os.path.getsize(fp)
+size_json = do_json("world_size", {"server_id": SERVER_ID}, {
+    "world_size": total_size
+})
+client.write_points(size_json)
 
 os.chdir("world/stats")
 for filename in os.listdir("."):
