@@ -46,11 +46,12 @@ A systemd timer to run `backup.sh` every 15 minutes.
 
 Requirements:
 * `rcon.py`
-* `pixz`
+* A `borg` repository. See the [borg docs](https://borgbackup.readthedocs.io/en/stable/index.html) for information.
 
 Usage:
 * Place `backup.sh` in `/srv/minecraft/<server name>`
-* Replace the values of `MC_SERVER_ADDR`, `MC_SERVER_RCON_PASS`, `MC_SERVER_RCON_PORT`, `BACKUP_USER` and `BACKUP_GROUP` in `backup.sh`
+* Replace the values of `MC_SERVER_ADDR`, `MC_SERVER_RCON_PASS`, `MC_SERVER_RCON_PORT`, `SERVER_NAME`, and `BORG_REPO_DIR` in `backup.sh`.
+    * `SERVER_NAME` is used in the name of the backup in borg
 * Enable/start the timer with `systemctl enable --now minecraft_backup@<server name>.timer`
 
 ## `scraper.py`, `minecraft_stats@.service`, `minecraft_stats@.timer`
