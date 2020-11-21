@@ -8,9 +8,12 @@ from mcrcon import MCRcon
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--port", "-p", type=int, help="The RCON port of the server")
-parser.add_argument("--url", "-u", type=str, help="The IP or URL of the server")
-parser.add_argument("--password", "-p", type=str, help="The RCON password of the server")
+parser.add_argument("--port", "-p", type=int,
+                    help="The RCON port of the server")
+parser.add_argument("--url", "-u", type=str,
+                    help="The IP or URL of the server")
+parser.add_argument("--password", "-p", type=str,
+                    help="The RCON password of the server")
 parser.add_argument("command", type=str, nargs="+", help="The command to run")
 cmd_args = parser.parse_args()
 
@@ -36,6 +39,6 @@ if url is None:
 
 
 with MCRcon(url, password, port) as rc:
-    print(" ".join(sys.argv[1:]))
-    resp = rc.command(" ".join(sys.argv[1:]))
-    print(resp)
+    print(f"Command: {' '.join(sys.argv[1:])}")
+    response = rc.command(" ".join(sys.argv[1:]))
+    print(f"Response: {response}")

@@ -4,7 +4,6 @@ export MC_SERVER_ADDR="localhost"
 export MC_SERVER_RCON_PASS="password"
 export MC_SERVER_RCON_PORT=25575
 
-
 rcon.py tellraw @a '["",{"text":"["},{"text":"Server","color":"red"},{"text":"]: Server shutting down in 5 seconds. Saving the world"}]'
 rcon.py save-all
 sleep 1

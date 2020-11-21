@@ -1,19 +1,17 @@
-import argparse
 import datetime
 import http
 import json
 import os
-import re
+from typing import Dict
 
-import nbt
-import requests
 from influxdb import InfluxDBClient
 from mcrcon import MCRcon
 
-MINECRAFT_DB_NAME = "minecraft_server_data"
-SERVER_ID = "server_id"
+MINECRAFT_DB_NAME: str = "minecraft_server_data"
+SERVER_ID: str = "server_id"
 
-LOCAL_TIMEZONE = datetime.datetime.now(datetime.timezone(datetime.timedelta(0))).astimezone().tzinfo
+LOCAL_TIMEZONE = datetime.datetime.now(
+    datetime.timezone(datetime.timedelta(0))).astimezone().tzinfo
 RUN_TIME = datetime.datetime.now(tz=LOCAL_TIMEZONE).isoformat()
 
 INFLUX_SERVER_ADDR = "localhost"
@@ -30,7 +28,7 @@ def is_valid_mojang_uuid(uuid: str) -> bool:
 
     uuid = uuid.lower()
 
-    if len(uuid) != 32:
+    if len(uuid) != allowed_len:
         return False
     if any(x not in allowed_chars for x in uuid):
         return False
@@ -38,14 +36,12 @@ def is_valid_mojang_uuid(uuid: str) -> bool:
     return True
 
 
-def player_from_uuid(identifier: str, timestamp=None) -> str:
+def player_from_uuid(identifier: str) -> str:
     print("\n", identifier, "\n")
     valid = True
 
     # Handle the timestamp
     get_args = ""
-    if timestamp is not None:
-        get_args = "?at=" + str(timestamp)
 
     # Build the request path based on the identifier
     req = ""
@@ -100,7 +96,7 @@ def player_from_uuid(identifier: str, timestamp=None) -> str:
     return username
 
 
-def do_json(measurement_name, tags, fields) -> list:
+def create_json_structure(measurement_name: str, tags: Dict[str, str], fields: Dict[str, str]):
     return [
         {
             "measurement": measurement_name,
@@ -121,15 +117,17 @@ with MCRcon(MC_SERVER_ADDR, MC_SERVER_RCON_PASS, MC_SERVER_RCON_PORT) as rc:
     whitelist_response = rc.command("whitelist list")
     list_response = rc.command("list")
 
-whitelist = whitelist_response[whitelist_response.find(":") + 1:].replace(",", "").split()
+whitelist = whitelist_response[whitelist_response.find(
+    ":") + 1:].replace(",", "").split()
 print(whitelist)
 
 
-online_players = list_response[list_response.find(":") + 1:].replace(",", "").split()
+online_players = list_response[list_response.find(
+    ":") + 1:].replace(",", "").split()
 print(online_players)
 
 
-players_json = do_json("players", {"server_id": SERVER_ID}, {
+players_json = create_json_structure("players", {"server_id": SERVER_ID}, {
     "online_player_count": len(online_players),
     "online_players": ",".join(online_players)
 })
@@ -138,7 +136,7 @@ print(players_json)
 
 client.write_points(players_json)
 
-whitelist_json = do_json("whitelist", {"server_id": SERVER_ID}, {
+whitelist_json = create_json_structure("whitelist", {"server_id": SERVER_ID}, {
     "whitelist_player_count": len(whitelist),
     "whitelist": ",".join(whitelist)
 })
@@ -151,7 +149,7 @@ for path, dirs, files in os.walk(start_path):
     for f in files:
         fp = os.path.join(path, f)
         total_size += os.path.getsize(fp)
-size_json = do_json("world_size", {"server_id": SERVER_ID}, {
+size_json = create_json_structure("world_size", {"server_id": SERVER_ID}, {
     "world_size": total_size
 })
 client.write_points(size_json)
@@ -161,7 +159,7 @@ for filename in os.listdir("."):
     print(filename)
     uuid = filename.replace(".json", "")
     playername = player_from_uuid(uuid)
-    parsed_data = {}
+    parsed_data: Dict[str, str] = {}
     if not filename.endswith("json"):
         continue
     with open(filename, "r") as f:
@@ -171,5 +169,6 @@ for filename in os.listdir("."):
         for cat, dat in stats_data.items():
             for stat, value in dat.items():
                 parsed_data[cat + "/" + stat] = value
-    influx_json = do_json("stats", {"server_id": SERVER_ID, "player": playername}, parsed_data)
+    influx_json = create_json_structure(
+        "stats", {"server_id": SERVER_ID, "player": playername}, parsed_data)
     client.write_points(influx_json)
