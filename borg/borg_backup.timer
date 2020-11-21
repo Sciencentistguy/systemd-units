@@ -1,0 +1,9 @@
+[Unit]
+Description=Run borg backups at midnight every day
+
+[Timer]
+OnCalendar=*-*-* 00:00:00
+Unit=borg_backup.target
+
+[Install]
+WantedBy=multi-user.target

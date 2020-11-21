@@ -1,0 +1,9 @@
+[Unit]
+Description=Run rclone_backups at 3am every day
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+Unit=rclone_backups.service
+
+[Install]
+WantedBy=multi-user.target

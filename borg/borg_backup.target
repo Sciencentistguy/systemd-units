@@ -1,0 +1,4 @@
+[Unit]
+Description=Target for the borg backups of influxdb, grafana, gitea (with postgresql) and /etc/ 
+Wants=influx_backup.service grafana_backup.service gitea_backup.serivce etc_backup.service
+After=influx_backup.service grafana_backup.service gitea_backup.serivce etc_backup.service

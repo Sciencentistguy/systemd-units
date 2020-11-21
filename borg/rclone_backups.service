@@ -1,0 +1,9 @@
+[Unit]
+Description=backup borg repos to gdrive
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/
+ExecStart=/bin/rclone sync --transfers=16 --checkers=64 /nas/backup borgdrive:

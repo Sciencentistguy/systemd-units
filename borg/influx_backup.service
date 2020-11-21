@@ -1,0 +1,17 @@
+[Unit]
+Description=influxdb backup with borg
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/
+ExecStart=/bin/borg create      \
+    -C lzma                     \
+    /nas/backup/influxdb::{now} \
+    /var/lib/influxdb           \
+    /etc/influxdb
+
+ExecStart=/bin/borg check       \
+    --verbose                   \
+    /nas/backup/influxdb

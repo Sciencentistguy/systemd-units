@@ -1,0 +1,17 @@
+[Unit]
+Description=Grafana backup with borg
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/
+ExecStart=/bin/borg create      \
+    -C lzma                     \
+    /nas/backup/grafana::{now}  \
+    /var/lib/grafana            \
+    /etc/grafana.ini
+
+ExecStart=/bin/borg check       \
+    --verbose                   \
+    /nas/backup/influx
