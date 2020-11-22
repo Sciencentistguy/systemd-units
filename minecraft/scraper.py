@@ -62,7 +62,7 @@ def player_from_uuid(identifier: str) -> str:
         headers={
             'User-Agent': 'https://github.com/Sciencentistguy/minecraft-server-scripts',
             'Content-Type': 'application/json'})
-    response = http_conn.getresponse().read().decode("utf-8")
+    response: str = http_conn.getresponse().read().decode("utf-8")
 
     # In case the answer is empty, the user dont exist
     if not response:
@@ -74,7 +74,6 @@ def player_from_uuid(identifier: str) -> str:
     # Handle the response of the different requests on different ways
     # Request using username
     # The UUID
-    uuid = identifier
 
     current_name = ""
     current_time = 0
@@ -85,11 +84,6 @@ def player_from_uuid(identifier: str) -> str:
         # The first name has no change time
         if 'changedToAt' not in name:
             name['changedToAt'] = 0
-
-        # Get the right name on timestamp
-        if current_time <= name['changedToAt'] and (timestamp is None or name['changedToAt'] <= timestamp):
-            current_time = name['changedToAt']
-            current_name = name['name']
 
     # The username written correctly
     username = current_name
