@@ -93,4 +93,4 @@ Usage:
 
 `minecraft@.service` is derived from [this](https://github.com/agowa338/MinecraftSystemdUnit/), under the terms of the MIT licence.
 
-These files are available under the terms of the Mozilla Public Licence, version 2.0
+Available under the terms of the Mozilla Public Licence, version 2.0
