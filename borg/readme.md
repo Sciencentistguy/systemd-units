@@ -1,1 +1,3 @@
-Systemd unit files for running automated backups with borg, and copying them to google drive with rclone
+# Borg
+
+Systemd units for running backups with borg, and for copying them to google drive with rclone.
