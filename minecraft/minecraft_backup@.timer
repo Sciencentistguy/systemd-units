@@ -1,0 +1,9 @@
+[Unit]
+Description=Run minecraft_backup@%i.service every 15 minutes
+
+[Timer]
+OnCalendar=*:0/15
+Unit=minecraft_backup@%i.service
+
+[Install]
+WantedBy=multi-user.target

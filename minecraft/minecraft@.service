@@ -1,0 +1,28 @@
+[Unit]
+Description=Minecraft Server %i
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory=/srv/minecraft/%i
+PrivateUsers=true 
+User=root
+Group=root
+
+ProtectSystem=full 
+ProtectHome=true 
+ProtectKernelTunables=true 
+ProtectKernelModules=true 
+ProtectControlGroups=true 
+
+ExecStart=/bin/bash -c '/usr/bin/tmux new -s mc-%i -d /usr/bin/java -Xms6G -Xmx6G -jar server.jar nogui'
+
+ExecReload=/srv/minecraft/%i/reload.sh
+
+ExecStop=/srv/minecraft/%i/stop.sh
+
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target
